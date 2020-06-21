@@ -1,5 +1,6 @@
 # sample-survey-design
 Please open the index.html to understand the flow of this sample website.
+
 Segment 1: There you will find three variable in <script> tag. 1) survey_intro 2) survey_sample_page 3) survey_finish
 These three variables are the definition of each page of the survey.
 
