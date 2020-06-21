@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <script src="jspsych.js"></script>
+    <script src="./plugins/jspsych-survey-text.js"></script>
+     <script src="./plugins/jspsych-survey-html-form.js"></script>
+    <link rel="stylesheet" href="./css/jspsych.css"></link>
+    <link rel="stylesheet" href="./css/drrp.css"></link>
+    
+    
+  </head>
+  <body></body>
+  <script>
+
+  	var survey_intro = {
+    type: 'survey-text',
+    questions: [
+      {prompt: 'Welcome! Please Enter Your ID here:', columns: 9, required: true, name: 'ID'},
+    ],
+    randomize_question_order: false
+  };
+  var survey_sample_page = {
+		type: 'survey-html-form',
+		preamble: '<p> Video 1. </p>',
+		html: '<div style="margin: auto;"> <video id="example_video_1" src="video/1.mov" class="video-js vjs-default-skin"controls preload="auto" width="100%" height="400" scale="tofit" data-setup="{"example_option":true}"> <source id="first" type="video/mp4"/></video></div> <label class="statement">How useful did you find the captions?</label><ul class="likert"><li><input type="radio" name="useful_question" value="5"><label>Strongly agree</label></li><li><input type="radio" name="useful_question" value="4" required><label>Agree</label></li><li><input type="radio" name="useful_question" value="3"><label>Neutral</label></li><li><input type="radio" name="useful_question" value="2"><label>Disagree</label></li><li><input type="radio" name="useful_question" value="1" required><label>Strongly Disagree</label></li></ul><label class="statement">Did you enjoy the video with the caption?</label><ul class="likert"><li><input type="radio" name="enjoy_question" value="5"><label>Strongly agree</label></li><li><input type="radio" name="likert" value="4"><label>Agree</label></li><li><input type="radio" name="enjoy_question" value="3"><label>Neutral</label></li><li><input type="radio" name="enjoy_question" value="2"><label>Disagree</label></li><li><input type="radio" name="enjoy_question" value="1"><label>Strongly Disagree</label></li></ul><label class="statement">I find the caption in the video easy to follow:</label><ul class="likert"><li><input type="radio" name="easy_to_follow_question" value="5" required><label>Strongly agree</label></li><li><input type="radio" name="easy_to_follow_question" value="4"><label>Agree</label></li><li><input type="radio" name="easy_to_follow_question" value="3"><label>Neutral</label></li><li><input type="radio" name="easy_to_follow_question" value="2"><label>Disagree</label></li><li><input type="radio" name="easy_to_follow_question" value="1"><label>Strongly Disagree</label></li></ul><div name="open_ended_question"><label class="statement" >Can you tell us what happened in the video?</label><textarea form="jspsych-survey-text-form" rows="4" cols="50" name="comment" form="usrform" required>Enter text here...</textarea></div>'
+	}
+   var survey_finish = {
+		type: 'survey-html-form',
+		preamble: '<p> The Experiment Has Been Finished. </p>',
+		html: '<p> <b>Thanks For Your Participation.</b> </p>'
+	}
+	   
+
+  	jsPsych.init({
+    timeline: [survey_intro, survey_sample_page, survey_finish],
+    on_finish: function() { 
+    // Create a request variable and assign a new XMLHttpRequest object to it.
+    var request = new XMLHttpRequest()
+
+    // Open a new connection, using the GET request on the URL endpoint
+    request.open('GET', 'https://ghibliapi.herokuapp.com/films', true)
+
+    request.onload = function() {
+      // Begin accessing JSON data here
+    }
+
+    // Send request
+    request.send()
+      jsPsych.data.displayData(); 
+  }
+  });
+  </script>
+  </html>
